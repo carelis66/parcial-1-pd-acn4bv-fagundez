@@ -1,13 +1,111 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Spa para animales de Élite</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Élite Animal Spa</title>
+  <!-- Tipografías elegantes -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Spa de lujo para perros y gatos: baños premium, spa detox, grooming y más. Turnos exclusivos."/>
 </head>
 <body>
-    <h1>Bienvenidos a Spa para perro y gatos de Élite</h1>
-    <p>Reservá turnos exclusivos para tu mascota.</p>
-    <script src="app.js"></script>
+  <!-- Header / Navbar -->
+  <header class="nav">
+    <div class="container nav__inner">
+      <div class="brand">
+        <div class="brand__logo" aria-hidden="true">🐾</div>
+        <div class="brand__text">
+          <h1 class="brand__title">Élite Animal Spa</h1>
+          <p class="brand__tag">Perros & Gatos • Lujo y Bienestar</p>
+        </div>
+      </div>
+      <nav class="menu" aria-label="principal">
+        <a href="#servicios">Servicios</a>
+        <a href="#experiencia">Experiencia</a>
+        <a href="#turnos" class="btn btn--primary">Reservar</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero__overlay"></div>
+    <div class="container hero__content">
+      <h2>Bienestar exquisito para tu mejor amigo</h2>
+      <p>Citas limitadas por día. Atención personalizada, productos hipoalergénicos y protocolos de calma.</p>
+      <a href="#turnos" class="btn btn--gold">Solicitar turno</a>
+    </div>
+  </section>
+
+  <!-- Servicios -->
+  <section id="servicios" class="section">
+    <div class="container">
+      <h3 class="section__title">Servicios exclusivos</h3>
+      <div class="grid">
+        <article class="card">
+          <h4>Baño Premium</h4>
+          <p>Champú hipoalergénico, masaje relajante y secado silencioso.</p>
+          <span class="badge">45 min</span>
+        </article>
+        <article class="card">
+          <h4>Spa Detox</h4>
+          <p>Mascarilla nutritiva + aromaterapia suave para reducir estrés.</p>
+          <span class="badge">60 min</span>
+        </article>
+        <article class="card">
+          <h4>Grooming Élite</h4>
+          <p>Corte a medida (raza/estilo), peinado y perfumado sutil.</p>
+          <span class="badge">75 min</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experiencia -->
+  <section id="experiencia" class="section section--soft">
+    <div class="container split">
+      <div>
+        <h3 class="section__title">La experiencia Élite</h3>
+        <ul class="list">
+          <li>Agenda con cupos limitados para un ambiente sin estrés.</li>
+          <li>Zona silenciosa, luces tenues y música relajante.</li>
+          <li>Productos veganos e hipoalergénicos certificados.</li>
+        </ul>
+      </div>
+      <div class="highlight">
+        <p class="highlight__text">“El único lugar donde mi gato se relaja de verdad.”</p>
+        <p class="highlight__author">— Clienta real</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Turnos -->
+  <section id="turnos" class="section section--cta">
+    <div class="container cta">
+      <h3>Turnos exclusivos por día</h3>
+      <p>Cupos reducidos para atención 1 a 1. Reservá tu lugar.</p>
+      <a href="#" class="btn btn--primary">Reservar ahora</a>
+      <small class="note">*Luego agregamos el formulario real con JavaScript.</small>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© <span id="year"></span> Élite Animal Spa. Todos los derechos reservados.</p>
+      <nav class="footer__menu" aria-label="secundario">
+        <a href="#servicios">Servicios</a>
+        <a href="#experiencia">Experiencia</a>
+        <a href="#turnos">Reservar</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // Año dinámico (pequeño detalle)
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
+
