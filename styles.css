@@ -1,18 +1,135 @@
-body {
-    background-color: #F5F5F5; /* gris claro */
-    font-family: 'Montserrat', sans-serif;
-    margin: 0;
-    padding: 0;
+/* Variables de marca (lujo sobrio + spa) */
+:root{
+  --bg: #0B0B0C;           /* negro carbón profundo */
+  --ink: #FAF9F6;         /* crema muy clara */
+  --muted: #C7C7C7;       /* gris sutil */
+  --gold: #C6A15B;        /* dorado elegante */
+  --gold-2: #E1C990;      /* dorado claro para detalles */
+  --soft: #121315;        /* gris casi negro para paneles */
+  --accent: #A7D8F5;      /* toque spa (celeste suave) */
+  --accent-2: #B8E6DC;    /* verde agua suave */
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(0,0,0,.3);
 }
 
-h1 {
-    color: #C6A15B; /* dorado */
-    text-align: center;
-    margin-top: 2rem;
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.5;
 }
 
-p {
-    text-align: center;
-    font-size: 1.2rem;
+/* Utilidades */
+.container{width:min(1100px, 90%); margin:0 auto}
+.btn{
+  display:inline-block; padding:.9rem 1.2rem; border-radius:999px;
+  text-decoration:none; font-weight:600; transition:transform .15s ease, opacity .15s ease, box-shadow .2s;
+  border:1px solid transparent;
 }
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn--primary{background: var(--ink); color: var(--bg); border-color: var(--gold)}
+.btn--primary:hover{box-shadow:0 8px 18px rgba(255,255,255,.08)}
+.btn--gold{background: var(--gold); color:#1b1b1b}
+.btn--gold:hover{box-shadow:0 8px 18px rgba(198,161,91,.35)}
+
+/* Navbar */
+.nav{
+  position:sticky; top:0; z-index:50; 
+  background: linear-gradient(180deg, rgba(11,11,12,.9), rgba(11,11,12,.6) 70%, transparent);
+  border-bottom:1px solid rgba(198,161,91,.18);
+}
+.nav__inner{display:flex; align-items:center; justify-content:space-between; padding: .9rem 0}
+.brand{display:flex; align-items:center; gap:.8rem}
+.brand__logo{
+  width:44px; height:44px; display:grid; place-items:center;
+  border-radius:50%; background: radial-gradient(120% 120% at 50% 0, var(--gold-2), var(--gold));
+  color:#2a2a2a; font-size:1.1rem; box-shadow: var(--shadow);
+}
+.brand__title{font-family:"Playfair Display", serif; font-weight:600; letter-spacing:.3px; margin:0; font-size:1.25rem}
+.brand__tag{margin:.1rem 0 0; font-size:.85rem; color: var(--muted)}
+.menu{display:flex; gap:1rem; align-items:center}
+.menu a{
+  color:var(--ink); text-decoration:none; padding:.4rem .6rem; border-radius:8px; border:1px solid transparent;
+}
+.menu a:hover{border-color: rgba(198,161,91,.25)}
+
+/* Hero */
+.hero{
+  position:relative; min-height:64vh;
+  background:
+    linear-gradient(180deg, rgba(11,11,12,.35), rgba(11,11,12,.85)),
+    url('https://images.unsplash.com/photo-1612533716313-1d5d295df1c4?q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;
+  display:grid; place-items:center; text-align:center;
+}
+.hero__overlay{position:absolute; inset:0; box-shadow: inset 0 -120px 120px rgba(11,11,12,.9)}
+.hero__content{position:relative; padding: 3rem 0}
+.hero h2{
+  font-family:"Playfair Display", serif; font-size: clamp(1.8rem, 4vw, 3rem); margin:0 0 .8rem;
+  text-shadow: 0 4px 30px rgba(0,0,0,.6);
+}
+.hero p{max-width:700px; margin:0 auto 1.2rem; color:#EDEBE6}
+
+/* Secciones */
+.section{padding: clamp(2.2rem, 5vw, 4rem) 0}
+.section--soft{background: linear-gradient(180deg, #0E0F11, #0B0B0C)}
+.section__title{
+  font-family:"Playfair Display", serif; margin:0 0 1.4rem; letter-spacing:.2px;
+  border-left:4px solid var(--gold); padding-left:.7rem;
+}
+
+/* Grid de servicios */
+.grid{
+  display:grid; gap:1rem;
+  grid-template-columns: repeat(12, 1fr);
+}
+.card{
+  grid-column: span 12; padding:1.2rem; border-radius: var(--radius);
+  background: linear-gradient(180deg, #111214, #0C0D0F);
+  border:1px solid rgba(198,161,91,.18);
+  box-shadow: var(--shadow);
+}
+.card h4{margin:.2rem 0 .3rem; font-size:1.15rem}
+.card p{margin:0 0 .6rem; color:#DCD9D0}
+.badge{
+  display:inline-block; font-size:.8rem; padding:.28rem .6rem; border-radius:999px;
+  background: rgba(198,161,91,.18); color: var(--gold); border:1px solid rgba(198,161,91,.35);
+}
+
+/* Experiencia */
+.split{display:grid; gap:1.4rem; grid-template-columns: 1fr}
+.list{margin:0; padding-left:1.1rem}
+.list li{margin:.4rem 0}
+.highlight{
+  border:1px solid rgba(198,161,91,.18);
+  background: linear-gradient(180deg, #111214, #0C0D0F);
+  border-radius: var(--radius); padding:1.2rem; box-shadow: var(--shadow);
+}
+.highlight__text{font-family:"Playfair Display", serif; font-size:1.05rem; margin:.2rem 0 .4rem}
+.highlight__author{margin:0; color:var(--muted)}
+
+/* CTA */
+.section--cta{
+  background: radial-gradient(120% 140% at 50% -20%, rgba(198,161,91,.22), transparent 60%), #0B0B0C;
+  text-align:center; border-top:1px solid rgba(198,161,91,.18);
+}
+.cta p{color:#DFDACC; margin:.2rem 0 1rem}
+.note{display:block; color:var(--muted); margin-top:.6rem}
+
+/* Footer */
+.footer{border-top:1px solid rgba(198,161,91,.18); padding:1rem 0; background:#0A0B0C}
+.footer__inner{display:flex; gap:1rem; align-items:center; justify-content:space-between; flex-wrap:wrap}
+.footer__menu{display:flex; gap:.8rem}
+.footer__menu a{color:var(--muted); text-decoration:none}
+.footer__menu a:hover{color:var(--ink)}
+
+/* Responsivo */
+@media (min-width: 720px){
+  .grid > .card{grid-column: span 4}
+  .split{grid-template-columns: 1.2fr .8fr}
+}
+
 
