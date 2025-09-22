@@ -1,13 +1,13 @@
-/* Variables de marca (lujo sobrio + spa) */
+/* Variables de marca Copiar la paleta (No muy segura)*/
 :root{
-  --bg: #0B0B0C;           /* negro carbón profundo */
-  --ink: #FAF9F6;         /* crema muy clara */
-  --muted: #C7C7C7;       /* gris sutil */
-  --gold: #C6A15B;        /* dorado elegante */
-  --gold-2: #E1C990;      /* dorado claro para detalles */
-  --soft: #121315;        /* gris casi negro para paneles */
-  --accent: #A7D8F5;      /* toque spa (celeste suave) */
-  --accent-2: #B8E6DC;    /* verde agua suave */
+  --bg: #0B0B0C;           
+  --ink: #FAF9F6;        
+  --muted: #C7C7C7;       
+  --gold: #C6A15B;        
+  --gold-2: #E1C990;      
+  --soft: #121315;        
+  --accent: #A7D8F5;      
+  --accent-2: #B8E6DC;    
   --radius: 14px;
   --shadow: 0 10px 30px rgba(0,0,0,.3);
 }
