@@ -50,8 +50,75 @@ function renderTurnos() {
   });
 }
 
-
-
 renderTurnos();
+
+// --- storage ---
+const STORAGE_KEY = "turnos_spa";
+
+function guardarTurnos() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(turnos));
+}
+
+function cargarTurnos() {
+  const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  // reconstruye como Turno (para no perder métodos)
+  turnos = data.map(t => new Turno(t.id, t.fecha, t.hora, t.servicio, t.mascota, t.duenio));
+}
+
+// --- <select> de servicios ---
+function poblarServicios() {
+  const sel = document.getElementById("servicio");
+  if (!sel) return;
+  sel.innerHTML = `<option value="">Elegí un servicio</option>` +
+    servicios.map(s => `<option value="${s.nombre}">${s.nombre} (${s.duracion})</option>`).join("");
+}
+
+// --- manejo del form ---
+function setupForm() {
+  const form = document.getElementById("form-turno");
+  if (!form) return;
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const mascota = document.getElementById("mascota").value.trim();
+    const duenio  = document.getElementById("duenio").value.trim();
+    const fecha   = document.getElementById("fecha").value;
+    const hora    = document.getElementById("hora").value;
+    const servicio= document.getElementById("servicio").value;
+
+    // Validaciones 
+    if (!mascota || !duenio || !fecha || !hora || !servicio) return alert("Completá todos los campos.");
+    const hoy = new Date().toISOString().slice(0,10);
+    if (fecha < hoy) return alert("Elegí una fecha futura.");
+
+    // Evitar duplicar mismo fecha+hora
+    const ocupado = turnos.some(t => t.fecha === fecha && t.hora === hora);
+    if (ocupado) return alert("Ese horario ya está reservado.");
+
+    // Crear y guardar
+    const id = Date.now(); // id simple
+    const nuevo = new Turno(id, fecha, hora, servicio, mascota, duenio);
+    turnos.push(nuevo);
+    guardarTurnos();
+    renderTurnos();
+    form.reset();
+    alert("¡Turno reservado!");
+  });
+}
+
+// --- init ( para que cuando cargue la página ande) ---
+function init() {
+  if (localStorage.getItem(STORAGE_KEY)) {
+    cargarTurnos();
+  } else {
+    guardarTurnos(); 
+  }
+  poblarServicios();
+  renderTurnos();
+}
+
+init();
+
 
 
