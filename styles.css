@@ -151,6 +151,40 @@ body{
 .footer__menu a{color:var(--muted); text-decoration:none}
 .footer__menu a:hover{color:var(--ink)}
 
+/* Tarjetas de turnos */
+.turno-card {
+  background: linear-gradient(180deg, #1a1a1a, #0f0f0f);
+  border: 1px solid rgba(198, 161, 91, 0.5); /* borde dorado suave */
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  margin: 0.8rem 0;
+  color: #f1f1f1;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Efecto hover */
+.turno-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(198, 161, 91, 0.35);
+  border-color: var(--gold); /* usa tu dorado principal */
+}
+
+/* Destacar etiquetas */
+.turno-card strong {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.turno-card em {
+  color: #b3b3b3;
+  font-size: 0.85rem;
+}
+
+
+
 /* Responsivo */
 @media (min-width: 720px){
   .grid > .card{grid-column: span 4}
