@@ -89,6 +89,37 @@
   </div>
 </section>
 
+ <!-- Formulario -->
+<section class="section">
+  <div class="container">
+    <h3 class="section__title">Reservar turno</h3>
+
+    <form id="form-turno">
+      <label for="mascota" class="sr-only">Nombre de la mascota</label>
+      <input id="mascota" name="mascota" type="text" placeholder="Nombre de la mascota" required>
+
+      <label for="duenio" class="sr-only">Dueño/a</label>
+      <!-- ⚠️ sin ñ en el id: 'duenio' para que coincida con JS -->
+      <input id="duenio" name="duenio" type="text" placeholder="Dueño/a" required>
+
+      <label for="fecha" class="sr-only">Fecha</label>
+      <input id="fecha" name="fecha" type="date" required>
+
+      <label for="hora" class="sr-only">Hora</label>
+      <input id="hora" name="hora" type="time" required>
+
+      <label for="servicio" class="sr-only">Servicio</label>
+      <select id="servicio" name="servicio" required>
+        <!-- placeholder para evitar error de <select> vacío -->
+        <option value="" disabled selected>Elegí un servicio…</option>
+      </select>
+
+      <button type="submit" class="btn btn--gold">Reservar</button>
+    </form>
+  </div>
+</section>
+
+
 
   <!-- Footer -->
   <footer class="footer">
@@ -103,7 +134,6 @@
   </footer>
 
   <script>
-    // VER DETALLE DEL AÑO SI NO ES COMPLICADO 22/09
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
