@@ -1,7 +1,10 @@
 **Proyecto: Élite Animal Spa**
 Materia: Programación y Desarrollo
+
 Comisión: ACN4BV  
+
 Alumna: Carelis Fagúndez
+
 DNI: 19.094.687
 ________________________________________________________________________
 ## Descripción del proyecto
