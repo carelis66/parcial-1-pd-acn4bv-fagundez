@@ -25,9 +25,9 @@ const servicios = [
 
 // Turnos iniciales (mock)
 let turnos = [
-  new Turno(1, "2025-09-13", "10:00", "Baño Premium",   "Tomate (Perro)",  "Karen Fernandez"),
-  new Turno(2, "2025-09-14", "11:00", "Spa Detox",      "Elmichi (Gato)", "Sergio Medina"),
-  new Turno(3, "2025-09-15", "12:00", "Grooming Élite", "Hernesto (perro)","Agustin Tapia")
+  new Turno(1, "2025-10-13", "10:00", "Baño Premium",   "Tomate (Perro)",  "Karen Fernandez"),
+  new Turno(2, "2025-10-14", "11:00", "Spa Detox",      "Elmichi (Gato)", "Sergio Medina"),
+  new Turno(3, "2025-10-15", "12:00", "Grooming Élite", "Hernesto (perro)","Agustin Tapia")
 ];
 
 // Render de turnos en pantalla
@@ -109,16 +109,15 @@ function setupForm() {
 
 // --- init ( para que cuando cargue la página ande) ---
 function init() {
-  if (localStorage.getItem(STORAGE_KEY)) {
-    cargarTurnos();
-  } else {
-    guardarTurnos(); 
-  }
-  poblarServicios();
-  renderTurnos();
-}
+  if (localStorage.getItem(STORAGE_KEY)) { cargarTurnos(); }
+  else { guardarTurnos(); }
 
-init();
+  poblarServicios();   // llena el <select> con servicios
+  renderTurnos();      // pinta las tarjetas existentes
+  setupForm();         // engancha el submit del form
+}
+init(); // si usás defer
+
 
 
 
