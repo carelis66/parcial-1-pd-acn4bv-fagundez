@@ -8,8 +8,9 @@ Alumna: Carelis Fagúndez
 DNI: 19.094.687
 ________________________________________________________________________
 ## Descripción del proyecto
-Aplicación web para un Spa de lujo para perros y gatos con funcionalidades de gestión de turnos.  
-El proyecto utiliza HTML, CSS y JavaScript.  
+
+- Aplicación web para un Spa de lujo para perros y gatos con funcionalidades de gestión de turnos.  
+El proyecto utiliza HTML, CSS y JavaScript
 ------------
 ##  Funcionalidades implementadas 
 - Navbar con estilos personalizados y botones adaptados a la paleta de colores.  
