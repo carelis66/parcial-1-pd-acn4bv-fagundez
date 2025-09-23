@@ -182,6 +182,22 @@ body{
   color: #b3b3b3;
   font-size: 0.85rem;
 }
+/* DFormulario abajo */
+#form-turno{
+  display: grid;
+  gap: .6rem;
+  grid-template-columns: 1fr 1fr;
+}
+#form-turno input, #form-turno select{
+  padding: .7rem .9rem;
+  border-radius: 10px;
+  border: 1px solid rgba(198,161,91,.25);
+  background: #0F0F10; color: var(--ink);
+}
+#form-turno button{ grid-column: 1 / -1; justify-self: start; }
+@media (max-width: 720px){
+  #form-turno{ grid-template-columns: 1fr; }
+}
 
 
 
