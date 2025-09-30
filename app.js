@@ -10,14 +10,14 @@ class Turno {
     this.estado = "reservado";
   }
 
-  // Resumen claro: servicio para la mascota, reservado por el dueño/a
+  // Resumen: servicio para la mascota, reservado por el dueño/a
   resumen() {
     return `Turno ${this.id}: ${this.mascota} tiene un ${this.servicio} el ${this.fecha} a las ${this.hora} (reservado por ${this.duenio}).`;
   }
 }
 
 // Servicios del spa (mock)
-const servicios = [
+let servicios = [
   { id: 1, nombre: "Baño Premium",   duracion: "45 min" },
   { id: 2, nombre: "Spa Detox",       duracion: "60 min" },
   { id: 3, nombre: "Grooming Élite",  duracion: "75 min" }
@@ -64,28 +64,34 @@ function poblarFiltroServicios() {
     servicios.map(s => `<option value="${s.nombre}">${s.nombre}</option>`).join("");
 }
 
-// Render el que acepta lista, si no, usa turnos)
+// Render (acepta lista; si no, usa turnos)
 function renderTurnos(lista = turnos) {
   const cont = document.getElementById("lista-turnos");
   if (!cont) return;
   cont.innerHTML = "";
+
   lista.forEach(t => {
     const div = document.createElement("div");
-    div.className = "turno-card";
+    div.className = "turno-card" + (t.estado === "cancelado" ? " turno-card--cancelado" : "");
     div.innerHTML = `
       <strong>Mascota:</strong> ${t.mascota} <br>
       <strong>Servicio:</strong> ${t.servicio} <br>
       <strong>Dueño/a:</strong> ${t.duenio} <br>
       <strong>Fecha:</strong> ${t.fecha} a las ${t.hora} <br>
-      <em>Estado: ${t.estado}</em>`;
+      <em>Estado: ${t.estado}</em>
+      <div class="turno-actions">
+        ${t.estado !== "cancelado" ? `<button class="btn-cancel" data-id="${t.id}">Cancelar</button>` : ""}
+      </div>
+    `;
     cont.appendChild(div);
   });
+
   if (!lista.length) {
     cont.innerHTML = `<p style="color:#b3b3b3">No hay turnos que coincidan.</p>`;
   }
 }
 
-// Se hacen los filtros y hace el re-render
+// Se aplican los filtros y hace re-render
 function aplicarFiltros() {
   const q = filtros.q.toLowerCase();
   const lista = turnos.filter(t =>
@@ -136,12 +142,30 @@ function setupForm() {
     turnos.push(nuevo);
     guardarTurnos();
 
-    // Re-render respetando filtros activos
+    // Re-render filtros activos
     aplicarFiltros();
     form.reset();
     alert("¡Turno reservado!");
   });
 }
+
+// --- cancelar turno (con callback con confirm) ---
+function cancelarTurno(id) {
+  const idx = turnos.findIndex(t => t.id === id);
+  if (idx === -1) return;
+  if (!confirm("¿Cancelar este turno?")) return; // callback requerido por la consigna
+  turnos[idx].estado = "cancelado";
+  guardarTurnos();
+  aplicarFiltros(); // re-render respetando filtros activos
+}
+
+// Eventos para botón cancelar (una sola vez)
+document.getElementById("lista-turnos")?.addEventListener("click", (e) => {
+  const btn = e.target.closest(".btn-cancel");
+  if (!btn) return;
+  const id = Number(btn.dataset.id);
+  cancelarTurno(id);
+});
 
 // --- init (una única vez) ---
 function init() {
@@ -158,6 +182,7 @@ function init() {
   setupForm();               // alta de turnos
 }
 init();
+
 
 
 
