@@ -6,6 +6,10 @@ Comisión: ACN4BV
 Alumna: Carelis Fagúndez
 
 DNI: 19.094.687
+
+## Informe del proyecto
+El informe detallado de la entrega está en el archivo [informe_proyecto.pdf](./informe_proyecto.pdf).
+
 ________________________________________________________________________
 ## Descripción del proyecto
 
