@@ -82,6 +82,25 @@
     </div>
   </section>
 
+<!-- Filtros -->
+<section class="section">
+  <div class="container">
+    <form id="controles-turnos" class="controles" onsubmit="return false;">
+      <label for="buscar" class="sr-only">Buscar por mascota</label>
+      <input id="buscar" name="buscar" type="search" placeholder="Buscar por mascota" autocomplete="off" />
+
+      <label for="filtro-fecha" class="sr-only">Filtrar por fecha</label>
+      <input id="filtro-fecha" name="filtro-fecha" type="date" />
+
+      <label for="filtro-servicio" class="sr-only">Filtrar por servicio</label>
+      <select id="filtro-servicio" name="filtro-servicio">
+        <option value="" selected>Todos los servicios</option>
+      </select>
+    </form>
+  </div>
+</section>
+
+
   <!-- Turnos vista -->
 <section id="turnos" class="section">
   <div class="container">
