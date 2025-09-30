@@ -222,23 +222,42 @@ body{
   background:#0F0F10; color:var(--ink);
 }
 
-/* Filtro arriba turnos */
+/* Contenedor de filtros */
 #controles-turnos {
   display: flex;
   gap: .6rem;
   flex-wrap: wrap;
   margin: .8rem 0 1rem;
-  justify-content: center;   /
+  align-items: center;
 }
 
+/* Inputs, selects y botón de limpiar */
 #controles-turnos input,
-#controles-turnos select {
+#controles-turnos select,
+#controles-turnos button {
   padding: .6rem .8rem;
   border-radius: 10px;
-  border: 1px solid rgba(198,161,91,.25);
+  border: 1px solid rgba(198, 161, 91, .25);
   background: #0F0F10;
   color: var(--ink);
+  font-family: inherit;
+  font-size: .9rem;
+  cursor: pointer;
 }
+
+/* Botón limpiar (outline dorado) */
+#controles-turnos button {
+  background: transparent;
+  color: #c6a15b;
+  border: 1px solid #c6a15b;
+  transition: all .2s ease;
+}
+
+#controles-turnos button:hover {
+  background: #c6a15b;
+  color: #0F0F10;
+}
+
 
 
 

@@ -78,6 +78,26 @@ function poblarFiltroServicios() {
     servicios.map(s => `<option value="${s.nombre}">${s.nombre}</option>`).join("");
 }
 
+// --- limpiar filtros ---
+function limpiarFiltrosUI() {
+  document.getElementById("buscar").value = "";
+  document.getElementById("filtro-fecha").value = "";
+  document.getElementById("filtro-servicio").value = "";
+}
+
+function setupLimpiarFiltros() {
+  const btn = document.getElementById("btn-limpiar");
+  if (!btn) return;
+  btn.addEventListener("click", () => {
+    filtros.q = "";
+    filtros.fecha = "";
+    filtros.servicio = "";
+    limpiarFiltrosUI();
+    aplicarFiltros();
+  });
+}
+
+
 // Render (acepta lista; si no, usa turnos)
 function renderTurnos(lista = turnos) {
   const cont = document.getElementById("lista-turnos");
@@ -195,5 +215,9 @@ async function init() {
   setupFiltros();            // listeners de búsqueda/fecha/servicio
   aplicarFiltros();          // render inicial respetando filtros (losvacíos)
   setupForm();               // alta de turnos
+  setupFiltros();            // listeners de búsqueda/fecha/servicio
+  setupLimpiarFiltros();     // botón de limpiar filtros
+  aplicarFiltros();          // render inicial respetando filtros (vacíos)
+
 }
 init();
