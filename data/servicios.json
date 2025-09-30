@@ -1,0 +1,5 @@
+[
+  { "id": 1, "nombre": "Baño Premium", "duracion": "45 min" },
+  { "id": 2, "nombre": "Spa Detox", "duracion": "60 min" },
+  { "id": 3, "nombre": "Grooming Élite", "duracion": "75 min" }
+]
