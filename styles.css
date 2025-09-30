@@ -216,6 +216,30 @@ body{
   cursor: pointer;
 }
 
+#controles-turnos{ display:flex; gap:.6rem; flex-wrap:wrap; margin:.8rem 0 1rem; }
+#controles-turnos input, #controles-turnos select{
+  padding:.6rem .8rem; border-radius:10px; border:1px solid rgba(198,161,91,.25);
+  background:#0F0F10; color:var(--ink);
+}
+
+/* Filtro arriba turnos */
+#controles-turnos {
+  display: flex;
+  gap: .6rem;
+  flex-wrap: wrap;
+  margin: .8rem 0 1rem;
+  justify-content: center;   /
+}
+
+#controles-turnos input,
+#controles-turnos select {
+  padding: .6rem .8rem;
+  border-radius: 10px;
+  border: 1px solid rgba(198,161,91,.25);
+  background: #0F0F10;
+  color: var(--ink);
+}
+
 
 
 /* Responsivo */
