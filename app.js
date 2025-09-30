@@ -42,7 +42,7 @@ function cargarTurnos() {
 // --- fetch de servicios (async/await) ---
 async function cargarServicios() {
   try {
-    const url = "https://raw.githubusercontent.com/carelis66/parcial-1-pd-acn4bv-fagundez/refs/heads/main/data/servicios.json";
+    const url = "https://raw.githubusercontent.com/carelis66/parcial-1-pd-acn4bv-fagundez/main/data/servicios.json";
     const resp = await fetch(url);
     if (!resp.ok) throw new Error("HTTP " + resp.status);
     servicios = await resp.json();
@@ -56,7 +56,6 @@ async function cargarServicios() {
     ];
   }
 }
-
 
 // --- <select> de servicios (form de alta) ---
 function poblarServicios() {
