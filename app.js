@@ -1,4 +1,4 @@
-// Clase Turno
+/// Clase Turno
 class Turno {
   constructor(id, fecha, hora, servicio, mascota, duenio) {
     this.id = id;
@@ -10,18 +10,14 @@ class Turno {
     this.estado = "reservado";
   }
 
-  // Resumen: servicio para la mascota, reservado por el dueño/a
+  // Resumen claro: servicio para la mascota, reservado por el dueño/a
   resumen() {
     return `Turno ${this.id}: ${this.mascota} tiene un ${this.servicio} el ${this.fecha} a las ${this.hora} (reservado por ${this.duenio}).`;
   }
 }
 
-// Servicios del spa (mock)
-let servicios = [
-  { id: 1, nombre: "Baño Premium",   duracion: "45 min" },
-  { id: 2, nombre: "Spa Detox",       duracion: "60 min" },
-  { id: 3, nombre: "Grooming Élite",  duracion: "75 min" }
-];
+// Servicios del spa (desde JSON con fetch)
+let servicios = []; // se completa en cargarServicios()
 
 // Turnos iniciales (mock)
 let turnos = [
@@ -42,6 +38,25 @@ function cargarTurnos() {
   // reconstruye como Turno (para no perder métodos)
   turnos = data.map(t => new Turno(t.id, t.fecha, t.hora, t.servicio, t.mascota, t.duenio));
 }
+
+// --- fetch de servicios (async/await) ---
+async function cargarServicios() {
+  try {
+    const url = "https://raw.githubusercontent.com/carelis66/parcial-1-pd-acn4bv-fagundez/refs/heads/main/data/servicios.json";
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error("HTTP " + resp.status);
+    servicios = await resp.json();
+    console.log("Servicios cargados desde GitHub RAW:", servicios);
+  } catch (err) {
+    console.error("Fallo fetch remoto, uso fallback local:", err);
+    servicios = [
+      { id: 1, nombre: "Baño Premium",   duracion: "45 min" },
+      { id: 2, nombre: "Spa Detox",      duracion: "60 min" },
+      { id: 3, nombre: "Grooming Élite", duracion: "75 min" }
+    ];
+  }
+}
+
 
 // --- <select> de servicios (form de alta) ---
 function poblarServicios() {
@@ -91,7 +106,7 @@ function renderTurnos(lista = turnos) {
   }
 }
 
-// Se aplican los filtros y hace re-render
+// Se aplican filtros y hace re-render
 function aplicarFiltros() {
   const q = filtros.q.toLowerCase();
   const lista = turnos.filter(t =>
@@ -142,14 +157,14 @@ function setupForm() {
     turnos.push(nuevo);
     guardarTurnos();
 
-    // Re-render filtros activos
+    // Re-render respetando filtros activos
     aplicarFiltros();
     form.reset();
     alert("¡Turno reservado!");
   });
 }
 
-// --- cancelar turno (con callback con confirm) ---
+// --- cancelar turno (callback con confirm) ---
 function cancelarTurno(id) {
   const idx = turnos.findIndex(t => t.id === id);
   if (idx === -1) return;
@@ -159,7 +174,7 @@ function cancelarTurno(id) {
   aplicarFiltros(); // re-render respetando filtros activos
 }
 
-// Eventos para botón cancelar (una sola vez)
+// Delegación de eventos para botón cancelar (una sola vez)
 document.getElementById("lista-turnos")?.addEventListener("click", (e) => {
   const btn = e.target.closest(".btn-cancel");
   if (!btn) return;
@@ -168,23 +183,18 @@ document.getElementById("lista-turnos")?.addEventListener("click", (e) => {
 });
 
 // --- init (una única vez) ---
-function init() {
+async function init() {
   if (localStorage.getItem(STORAGE_KEY)) {
     cargarTurnos();
   } else {
     guardarTurnos(); // primer guardado de los mocks
   }
 
+  await cargarServicios();   // JSON con fetch (con fallback si falla)
   poblarServicios();         // <select> del formulario
   poblarFiltroServicios();   // <select> del filtro
   setupFiltros();            // listeners de búsqueda/fecha/servicio
-  aplicarFiltros();          // render inicial respetando filtros (vacíos)
+  aplicarFiltros();          // render inicial respetando filtros (losvacíos)
   setupForm();               // alta de turnos
 }
 init();
-
-
-
-
-
-
