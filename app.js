@@ -6,7 +6,7 @@ class Turno {
     this.hora = hora;
     this.servicio = servicio;
     this.mascota = mascota;
-    this.duenio = duenio;   // dueño/a que reserva
+    this.duenio = duenio; // dueño/a que reserva
     this.estado = "reservado";
   }
 
@@ -18,39 +18,17 @@ class Turno {
 
 // Servicios del spa (mock)
 const servicios = [
-  { id: 1, nombre: "Baño Premium", duracion: "45 min" },
-  { id: 2, nombre: "Spa Detox", duracion: "60 min" },
-  { id: 3, nombre: "Grooming Élite", duracion: "75 min" }
+  { id: 1, nombre: "Baño Premium",   duracion: "45 min" },
+  { id: 2, nombre: "Spa Detox",       duracion: "60 min" },
+  { id: 3, nombre: "Grooming Élite",  duracion: "75 min" }
 ];
 
 // Turnos iniciales (mock)
 let turnos = [
   new Turno(1, "2025-10-13", "10:00", "Baño Premium",   "Tomate (Perro)",  "Karen Fernandez"),
-  new Turno(2, "2025-10-14", "11:00", "Spa Detox",      "Elmichi (Gato)", "Sergio Medina"),
-  new Turno(3, "2025-10-15", "12:00", "Grooming Élite", "Hernesto (perro)","Agustin Tapia")
+  new Turno(2, "2025-10-14", "11:00", "Spa Detox",      "Elmichi (Gato)",  "Sergio Medina"),
+  new Turno(3, "2025-10-15", "12:00", "Grooming Élite", "Hernesto (Perro)","Agustin Tapia")
 ];
-
-// Render de turnos en pantalla
-function renderTurnos() {
-  const contenedor = document.getElementById("lista-turnos");
-  if (!contenedor) return;
-  contenedor.innerHTML = "";
-
-  turnos.forEach(t => {
-    const div = document.createElement("div");
-    div.className = "turno-card";
-    div.innerHTML = `
-      <strong>Mascota:</strong> ${t.mascota} <br>
-      <strong>Servicio:</strong> ${t.servicio} <br>
-      <strong>Dueño/a:</strong> ${t.duenio} <br>
-      <strong>Fecha:</strong> ${t.fecha} a las ${t.hora} <br>
-      <em>Estado: ${t.estado}</em>
-    `;
-    contenedor.appendChild(div);
-  });
-}
-
-renderTurnos();
 
 // --- storage ---
 const STORAGE_KEY = "turnos_spa";
@@ -65,15 +43,71 @@ function cargarTurnos() {
   turnos = data.map(t => new Turno(t.id, t.fecha, t.hora, t.servicio, t.mascota, t.duenio));
 }
 
-// --- <select> de servicios ---
+// --- <select> de servicios (form de alta) ---
 function poblarServicios() {
   const sel = document.getElementById("servicio");
   if (!sel) return;
-  sel.innerHTML = `<option value="">Elegí un servicio</option>` +
+  sel.innerHTML =
+    `<option value="">Elegí un servicio</option>` +
     servicios.map(s => `<option value="${s.nombre}">${s.nombre} (${s.duracion})</option>`).join("");
 }
 
-// --- manejo del form ---
+// Filtros
+const filtros = { q: "", fecha: "", servicio: "" };
+
+// Completar select de filtro con servicios
+function poblarFiltroServicios() {
+  const sel = document.getElementById("filtro-servicio");
+  if (!sel) return;
+  sel.innerHTML =
+    '<option value="">Todos los servicios</option>' +
+    servicios.map(s => `<option value="${s.nombre}">${s.nombre}</option>`).join("");
+}
+
+// Render el que acepta lista, si no, usa turnos)
+function renderTurnos(lista = turnos) {
+  const cont = document.getElementById("lista-turnos");
+  if (!cont) return;
+  cont.innerHTML = "";
+  lista.forEach(t => {
+    const div = document.createElement("div");
+    div.className = "turno-card";
+    div.innerHTML = `
+      <strong>Mascota:</strong> ${t.mascota} <br>
+      <strong>Servicio:</strong> ${t.servicio} <br>
+      <strong>Dueño/a:</strong> ${t.duenio} <br>
+      <strong>Fecha:</strong> ${t.fecha} a las ${t.hora} <br>
+      <em>Estado: ${t.estado}</em>`;
+    cont.appendChild(div);
+  });
+  if (!lista.length) {
+    cont.innerHTML = `<p style="color:#b3b3b3">No hay turnos que coincidan.</p>`;
+  }
+}
+
+// Se hacen los filtros y hace el re-render
+function aplicarFiltros() {
+  const q = filtros.q.toLowerCase();
+  const lista = turnos.filter(t =>
+    t.mascota.toLowerCase().includes(q) &&
+    (!filtros.fecha || t.fecha === filtros.fecha) &&
+    (!filtros.servicio || t.servicio === filtros.servicio)
+  );
+  renderTurnos(lista);
+}
+
+// Listeners para filtros
+function setupFiltros() {
+  const inputBuscar = document.getElementById("buscar");
+  const inputFecha  = document.getElementById("filtro-fecha");
+  const selServ     = document.getElementById("filtro-servicio");
+
+  if (inputBuscar) inputBuscar.addEventListener("keyup",  e => { filtros.q = e.target.value; aplicarFiltros(); });
+  if (inputFecha)  inputFecha.addEventListener("change",  e => { filtros.fecha = e.target.value; aplicarFiltros(); });
+  if (selServ)     selServ.addEventListener("change",     e => { filtros.servicio = e.target.value; aplicarFiltros(); });
+}
+
+// --- manejo del form (este es el alta de turnos) ---
 function setupForm() {
   const form = document.getElementById("form-turno");
   if (!form) return;
@@ -87,7 +121,7 @@ function setupForm() {
     const hora    = document.getElementById("hora").value;
     const servicio= document.getElementById("servicio").value;
 
-    // Validaciones 
+    // Validaciones
     if (!mascota || !duenio || !fecha || !hora || !servicio) return alert("Completá todos los campos.");
     const hoy = new Date().toISOString().slice(0,10);
     if (fecha < hoy) return alert("Elegí una fecha futura.");
@@ -97,26 +131,34 @@ function setupForm() {
     if (ocupado) return alert("Ese horario ya está reservado.");
 
     // Crear y guardar
-    const id = Date.now(); // id simple
+    const id = Date.now(); // id simple por ahora
     const nuevo = new Turno(id, fecha, hora, servicio, mascota, duenio);
     turnos.push(nuevo);
     guardarTurnos();
-    renderTurnos();
+
+    // Re-render respetando filtros activos
+    aplicarFiltros();
     form.reset();
     alert("¡Turno reservado!");
   });
 }
 
-// --- init ( para que cuando cargue la página ande) ---
+// --- init (una única vez) ---
 function init() {
-  if (localStorage.getItem(STORAGE_KEY)) { cargarTurnos(); }
-  else { guardarTurnos(); }
+  if (localStorage.getItem(STORAGE_KEY)) {
+    cargarTurnos();
+  } else {
+    guardarTurnos(); // primer guardado de los mocks
+  }
 
-  poblarServicios();   // llena el <select> con servicios
-  renderTurnos();      // pinta las tarjetas existentes
-  setupForm();         // engancha el submit del form
+  poblarServicios();         // <select> del formulario
+  poblarFiltroServicios();   // <select> del filtro
+  setupFiltros();            // listeners de búsqueda/fecha/servicio
+  aplicarFiltros();          // render inicial respetando filtros (vacíos)
+  setupForm();               // alta de turnos
 }
-init(); // si usás defer
+init();
+
 
 
 
